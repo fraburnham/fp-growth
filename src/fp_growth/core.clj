@@ -4,26 +4,30 @@
 ;;implement the fp growth algorithm in clojure
 ;;to be used for basket analysis
 
-(def tree (1 '(a b c) 2))
-(def tree (zip/seq-zip (seq tree)))
+;data is in the format
+;((item item item) (item item item))
+;a transaction is a single list of items
 
-;given a proper tree you should be able to
-;loop through the whole bastard using zip/next
-;and visit every element
+;I'm using closures to increase readability, is that bad practice?
+(defn fp-growth-pre-sort [data]
+  (let [freqs (apply (partial merge-with +) (map frequencies data))]
+    (defn item-freq-list [x]
+      (list x (x freqs)))
+    (defn alpha-by-first-char [x]
+      (sort-by (comp str first) compare x))
+    (map #(map first %)
+         (map #(sort-by last > 
+                        (alpha-by-first-char (map item-freq-list %)))
+              data))))
 
-(defn print-tree [tree]
-  (if (zip/end? tree) 
-    nil
-    (do
-      (if (= '(a b c) (zip/node tree))
-        nil
-        (println (zip/node tree)))
-      (recur (zip/next tree)))))
-
-;let's start by building a path from a list of transactions
-(def trans '((a b c) (b c) (e d f) (b a c) (f e d)))
-;so you'll note there are two transactions that are the same
-;for all we care, the list needs to be storted so that
-;the most frequent items show up as the first purchase
-;this will allow the building of "prefixes" for the paths
-;and allow for better compression of the data
+;path building is something like
+;given (b c a)
+;zip/insert-child tree b
+;(with new tree)
+;zip/down tree (puts us at b)
+;zip/insert-child tree c
+;etc
+;needs to check each time if the child node already exists and just
+;increment if it does
+;gotta ponder how to handle the links, there may not be a super fast way to do
+;them
