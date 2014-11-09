@@ -1,0 +1,4 @@
+(ns fp-growth.core)
+
+;;implement the fp growth algorithm in clojure
+;;to be used for basket analysis
