@@ -81,3 +81,13 @@
     (recur
      (zip/next (zip/insert-right tree (list {(first path) 1})))
      (rest path))))
+
+
+(defn next-node [loc]
+  (if (terminal-node? loc) 
+    (doublezip loc)
+    (zip/next loc)))
+
+(zip/append-child (-> fp-tree zip/next doublezip doublezip zip/up) {'z 1})
+;first zip/next is because fp-tree was poorly formatted
+;doublezip gets us to the node instead of the branch
