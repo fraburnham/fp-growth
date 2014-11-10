@@ -57,7 +57,10 @@
       (recur nloc))))
 
 (defn add-branch [loc]
-  (zip/edit loc (fn [[node r]] (conj (list () r) node))))
+  (zip/edit loc (fn [[node r]] 
+                  (if (nil? r)
+                    (conj '(()) node)
+                    (conj (list () r) node)))))
 
 ;inc the val in the dict that the node holds
 (defn update-node [loc]
@@ -75,8 +78,6 @@
       (zip/seq-zip (zip/root loc))
       (let [find-key (first path)
             nn (tree-find-key-in-map loc find-key)]
-        (println nn find-key)
-        (println (zip/node loc))
         (if (= nn nil)
           (recur
             (zip/append-child (next-branch (add-branch loc)) new-node)
