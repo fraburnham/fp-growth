@@ -57,7 +57,7 @@
       (recur nloc))))
 
 (defn add-branch [loc]
-  (zip/edit loc (fn [[node _]] (conj '(()) node))))
+  (zip/edit loc (fn [[node r]] (conj (list () r) node))))
 
 ;inc the val in the dict that the node holds
 (defn update-node [loc]
@@ -74,16 +74,15 @@
     (if (empty? path) 
       (zip/seq-zip (zip/root loc))
       (let [find-key (first path)
-            next-node (tree-find-key-in-map loc find-key)]
-        (println (zip/node next-node) new-node)
-        (if (= (zip/node next-node) new-node)
-          (recur
-           (update-node next-node)
-           (rest path))
+            nn (tree-find-key-in-map loc find-key)]
+        (println nn find-key)
+        (println (zip/node loc))
+        (if (= nn nil)
           (recur
             (zip/append-child (next-branch (add-branch loc)) new-node)
-            (rest path)))))))
+            (rest path))
+          (recur
+           (update-node nn)
+           (rest path)))))))
 
-;ok, I'm getting it branch->node->branch->node
-;nodes hold our data
-;and branches describe where the nodes are
+;now all that is left is to build the links between branches for items
