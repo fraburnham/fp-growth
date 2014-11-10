@@ -14,22 +14,6 @@
   (if (terminal-node? loc) nil
       (zip/down loc)))
 
-(defn print-tree [loc]
-  (if (zip/end? loc 
-    nil
-    (do
-      (println (zip/node loc))
-      (recur (zip/next loc)))))
-
-(defn print-terminal-nodes [loc]
-  (if (zip/end? loc)
-    nil
-    (if (terminal-node? loc)
-      (do
-        (println (zip/node loc))
-        (recur (zip/next loc)))
-      (recur (zip/next loc)))))
-
 (defn alpha-by-first-char [x]
   (sort-by (comp str first) compare x))
 
@@ -50,6 +34,15 @@
   (cond (= (zip/node loc) find-node) loc
         (zip/end? loc) nil
         :else (recur (zip/next loc) find-node)))
+
+(defn tree-find-key-in-map [loc find-key]
+  (let [node (zip/node loc)
+        k (if (= (type node) (type {})) 
+            (first (keys node))
+            nil)]
+    (cond (= k find-key) loc
+          (zip/end? loc) nil
+          :else (recur (zip/next loc) find-key))))
 
 (defn next-node [loc]
   (let [nloc (zip/next loc)]
@@ -80,11 +73,8 @@
   (let [new-node {(first path) 1}]
     (if (empty? path) 
       (zip/seq-zip (zip/root loc))
-      ;sweet, so the concept is working, but the search is weak
-      ;it'll need to look IN the dict to see if the keys match
-      ;work on that there and then the first two thirds of fp-growth
-      ;are ready
-      (let [next-node (tree-find loc new-node)]
+      (let [find-key (first path)
+            next-node (tree-find-key-in-map loc find-key)]
         (println (zip/node next-node) new-node)
         (if (= (zip/node next-node) new-node)
           (recur
