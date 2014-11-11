@@ -32,10 +32,10 @@
 
 (defn add-branch [loc]
   (zip/edit loc 
-            (fn [[node r]] 
-              (if (nil? r)
-                (conj '(()) node)
-                (conj (list () r) node)))))
+            (fn [node] 
+              (if (empty? (rest node))
+                (conj '(()) (first node))
+                (conj (list () (rest node)) (first node))))))
 
 ;data is in the format
 ;((item item item) (item item item))
@@ -95,17 +95,22 @@
 ;takes an (empty-tree) as loc
 ;or an exsisting tree to add to
 (defn build-path [loc path]
+  (println path)
   (let [new-node {(first path) 1}]
     (if (empty? path) ;this if could be higher up need to refactor
       (zip/seq-zip (zip/root loc))
       (let [find-key (first path)
             nn (if (= (next-subbranch loc) nil) nil
+                   ;have to look deeper than loc's depth because
+                   ;loc is at the depth of the last added/updated node
                    (find-node-in-branch-this-depth (next-subbranch loc) 
                                                    find-key))]
         (if (= nn nil)
-          (recur
-            (zip/append-child (next-branch (add-branch loc)) new-node)
-            (rest path))
+          (do
+            (println "INSERTING")
+            (recur
+             (zip/append-child (next-branch (add-branch loc)) new-node)
+             (rest path)))
           (recur
            (update-node nn)
            (rest path)))))))
