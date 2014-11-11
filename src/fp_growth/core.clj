@@ -56,18 +56,15 @@
         :else (recur (zip/next loc) find-node)))
 
 (defn tree-find-key-in-map-subbranch [loc find-key]
-  (println "SEARCHING" loc)
   ;the if below may be superflous
   (if (not (nil? (zip/right loc)))
     (tree-find-key-in-map-subbranch ((zip/right loc) find-key)))
   (if (nil? loc) ;hit the bottom of this branch, don't look into the next one
     nil
-    (let [node (do (println (zip/node (zip/down loc))) 
-                   (zip/node (zip/down loc)))
+    (let [node (zip/node (zip/down loc))
           k (if (= (type node) (type {}))
               (first (keys node))
               nil)]
-      (println k node)
       (cond (= k find-key) loc ;return the loc where the key is
             (zip/end? loc) nil ;this may never happen ...
             :else (recur (next-subbranch loc) find-key)))))
@@ -76,21 +73,18 @@
 ;also it's broken at the end
 
 (defn find-node-in-branch-this-depth [loc find-key]
-  (println loc)
   (if (nil? loc) 
     nil
     (let [node (zip/node (zip/down loc))
           k (if (= (type node) (type {}))
               (first (keys node))
               nil)]
-      (println node k)
       (if (= k find-key) 
         loc
         (recur (zip/right loc) find-key)))))
 
 ;inc the val in the dict that the node holds
 (defn update-node [loc]
-  (println "UPDATING")
   (zip/edit 
    loc 
    (fn [node]
