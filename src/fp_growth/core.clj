@@ -35,7 +35,7 @@
             (fn [node] 
               (if (empty? (rest node))
                 (conj '(()) (first node))
-                (conj (list () (rest node)) (first node))))))
+                (conj (conj (rest node) '()) (first node))))))
 
 ;data is in the format
 ;((item item item) (item item item))
@@ -95,8 +95,8 @@
 ;takes an (empty-tree) as loc
 ;or an exsisting tree to add to
 (defn build-path [loc path]
-  (println path)
   (let [new-node {(first path) 1}]
+    (println path (zip/node loc) new-node)
     (if (empty? path) ;this if could be higher up need to refactor
       (zip/seq-zip (zip/root loc))
       (let [find-key (first path)
@@ -114,3 +114,8 @@
           (recur
            (update-node nn)
            (rest path)))))))
+
+;some cleanup for the adam and eve dataset
+;(def smallsample (pre-sort (map #(filter (comp not nil?) %) (take 5 (drop 3 item-titles)))))
+
+
