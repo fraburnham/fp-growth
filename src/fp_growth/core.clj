@@ -75,19 +75,15 @@
 ;i may be searching way to hardcore with that algo
 ;also it's broken at the end
 
-;so what do I really need to know? are any of the nodes
-;IN THIS BRANCH
-;AT THIS LEVEL
-;equal to the node i'm searching for?
-;that means i can check this node, zip/right check etc until nil
 (defn find-node-in-branch-this-depth [loc find-key]
+  (println loc)
   (if (nil? loc) 
     nil
-    (let [node (do (println (zip/node (zip/down loc))) 
-                   (zip/node (zip/down loc)))
+    (let [node (zip/node (zip/down loc))
           k (if (= (type node) (type {}))
               (first (keys node))
               nil)]
+      (println node k)
       (if (= k find-key) 
         loc
         (recur (zip/right loc) find-key)))))
@@ -105,12 +101,13 @@
 ;takes an (empty-tree) as loc
 ;or an exsisting tree to add to
 (defn build-path [loc path]
-  (println loc)
   (let [new-node {(first path) 1}]
     (if (empty? path) ;this if could be higher up need to refactor
       (zip/seq-zip (zip/root loc))
       (let [find-key (first path)
-            nn (find-node-in-branch-this-depth loc find-key)]
+            nn (if (= (next-subbranch loc) nil) nil
+                   (find-node-in-branch-this-depth (next-subbranch loc) 
+                                                   find-key))]
         (if (= nn nil)
           (recur
             (zip/append-child (next-branch (add-branch loc)) new-node)
