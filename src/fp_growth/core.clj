@@ -77,8 +77,8 @@
   (if (zip/end? loc)
     (zip/seq-zip (zip/root loc))
     (let [node (zip/node loc)]
-      (if (= (type node) (type {}))
-        (let [k (first (keys node))]
+      (if (= (type node) (type {})) 
+       (let [k (first (keys node))]
           (if (< (k node) cutoff)
             (recur (zip/remove (zip/up loc)) cutoff)
             (recur (zip/next loc) cutoff)))
@@ -99,7 +99,28 @@
           (recur (zip/right loc))))
       (recur (zip/right loc)))))
 
+(defn get-list-of-nodes [loc]
+  (loop [l loc
+         nodes '()]
+    (if (zip/end? l) 
+      (distinct nodes)
+      (if (zip/branch? l)
+        (recur (zip/next l) nodes)
+        (recur (zip/next l) (conj nodes (first (keys (zip/node l)))))))))
+
 ;now to link the like items
+;make a list of all item occurances in the tree
+;find the first occurance of the first item in the list
+;find the next, put the loc of the next in the :next of the first
+
+(defn item-link-tree [loc unique-nodes]
+  
+
+;will a map, once sorted always retain it's sort?
+;this will have to be a closure that knows the value
+;of :NODE for each sort
+(defn node-first-map[m]
+  (into (sorted-map-by (fn [x y] (if (= x :NODE) -1 +1))) m))
 
 ;some cleanup for the adam and eve dataset
 ;(def smallsample (pre-sort (map #(filter (comp not nil?) %) (take 5 (drop 3 item-titles)))))
