@@ -73,12 +73,7 @@
          (update-node nn)
          (rest path))))))
 
-;next the tree needs to be pruned
-;search for paths/nodes that have only 1 purchase
-;remove them
-;then the links between like items can be made
-
-(defn prune-tree [loc cutoff]
+(defn keep-frequent-nodes [loc cutoff]
   (if (zip/end? loc)
     (zip/seq-zip (zip/root loc))
     (let [node (zip/node loc)]
@@ -89,6 +84,22 @@
             (recur (zip/next loc) cutoff)))
         (recur (zip/next loc) cutoff)))))
 
+;! I only want to do this at the first level. at some level
+;no one has children idiot
+;zip/down your root node before starting
+;zip/right sets loc to nil and not to the loc on a tree
+(defn keep-branches-with-children [loc]
+  (if (nil? (zip/right loc)) ;this almost works unless the last branch has
+                             ;no children
+    (zip/seq-zip (zip/root loc))
+    (if (zip/branch? loc)
+      (let [children (next-subbranch loc)]
+        (if (nil? children)
+          (recur (zip/next (zip/remove loc)))
+          (recur (zip/right loc))))
+      (recur (zip/right loc)))))
+
+;now to link the like items
+
 ;some cleanup for the adam and eve dataset
 ;(def smallsample (pre-sort (map #(filter (comp not nil?) %) (take 5 (drop 3 item-titles)))))
-
