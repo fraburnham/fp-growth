@@ -84,10 +84,6 @@
             (recur (zip/next loc) cutoff)))
         (recur (zip/next loc) cutoff)))))
 
-;! I only want to do this at the first level. at some level
-;no one has children idiot
-;zip/down your root node before starting
-;zip/right sets loc to nil and not to the loc on a tree
 (defn keep-branches-with-children [loc]
   (if (nil? (zip/right loc)) ;this almost works unless the last branch has
                              ;no children
@@ -99,28 +95,49 @@
           (recur (zip/right loc))))
       (recur (zip/right loc)))))
 
-(defn get-list-of-nodes [loc]
+(defn get-list-of-frequent-nodes [loc]
   (loop [l loc
          nodes '()]
     (if (zip/end? l) 
-      (distinct nodes)
+      (take-nth 2 (flatten (filter (fn [[key val]]
+                                     (> val 1)) (frequencies nodes))))
       (if (zip/branch? l)
         (recur (zip/next l) nodes)
         (recur (zip/next l) (conj nodes (first (keys (zip/node l)))))))))
 
-;now to link the like items
-;make a list of all item occurances in the tree
-;find the first occurance of the first item in the list
-;find the next, put the loc of the next in the :next of the first
+(defn tree-find-key-in-map [loc find]
+  (if (zip/end? loc)
+    nil
+    (if (zip/branch? loc)
+      (recur (zip/next loc) find)
+      (if (= (type (zip/node loc)) (type {}))
+        (let [node (zip/node loc)
+              k (first (keys node))]
+          (if (= k find)
+            loc
+            (recur (zip/next loc) find)))
+        (recur (zip/next loc) find)))))
 
-(defn item-link-tree [loc unique-nodes]
-  
+(defn link-node [loc nextloc]
+  (zip/edit
+   loc
+   (fn [node]
+     (let [m (first node)
+           node-key (first (keys node))
+           remap-node-first (fn [m]
+                              (into 
+                               (sorted-map-by 
+                                (fn [x y] (if (= x node-key) -1 +1))) m))
+           newm (remap-node-first (assoc m :link nextloc))]
+       (cons newm (rest node))))))
 
-;will a map, once sorted always retain it's sort?
-;this will have to be a closure that knows the value
-;of :NODE for each sort
-(defn node-first-map[m]
-  (into (sorted-map-by (fn [x y] (if (= x :NODE) -1 +1))) m))
-
-;some cleanup for the adam and eve dataset
-;(def smallsample (pre-sort (map #(filter (comp not nil?) %) (take 5 (drop 3 item-titles)))))
+;not right this instant, but this feels like it could be a reduce
+(defn item-link-tree [loc items]
+  (if (empty? items)
+    (zip/seq-zip (zip/root loc))
+    (let [item (first items)
+          matchloc (tree-find-key-in-map loc item)
+          nextmloc (tree-find-key-in-map (zip/next matchloc) item)]
+      (if (nil? nextmloc)
+        (recur (zip/seq-zip (zip/root loc)) (rest items))
+        (recur (zip/next (link-node matchloc nextmloc)) items)))))
