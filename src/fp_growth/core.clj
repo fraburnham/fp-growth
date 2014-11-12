@@ -74,7 +74,21 @@
          (rest path))))))
 
 ;next the tree needs to be pruned
+;search for paths/nodes that have only 1 purchase
+;remove them
 ;then the links between like items can be made
+
+(defn prune-tree [loc cutoff]
+  (if (zip/end? loc)
+    (zip/seq-zip (zip/root loc))
+    (let [node (zip/node loc)]
+      (if (= (type node) (type {}))
+        (let [k (first (keys node))]
+          (if (< (k node) cutoff)
+            (recur (zip/remove (zip/up loc)) cutoff)
+            (recur (zip/next loc) cutoff)))
+        (recur (zip/next loc) cutoff)))))
 
 ;some cleanup for the adam and eve dataset
 ;(def smallsample (pre-sort (map #(filter (comp not nil?) %) (take 5 (drop 3 item-titles)))))
+
