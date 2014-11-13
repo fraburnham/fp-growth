@@ -84,12 +84,14 @@
             (recur (zip/next loc) cutoff)))
         (recur (zip/next loc) cutoff)))))
 
+;GOTTA ZIP NEXT OFF THE ROOT NODE
 (defn keep-branches-with-children [loc]
   (if (nil? (zip/right loc)) ;this almost works unless the last branch has
                              ;no children
     (zip/seq-zip (zip/root loc))
     (if (zip/branch? loc)
       (let [children (next-subbranch loc)]
+        (println loc children)
         (if (nil? children)
           (recur (zip/next (zip/remove loc)))
           (recur (zip/right loc))))
@@ -109,7 +111,6 @@
         (recur (zip/next l) (conj nodes (first (keys (zip/node l)))))))))
 
 (defn tree-find-key-in-map [loc find]
-  (println find)
   (if (zip/end? loc)
     nil
     (if (zip/branch? loc)
@@ -137,14 +138,19 @@
 
 ;not right this instant, but this feels like it could be a reduce
 (defn item-link-tree [loc items]
+  (println items)
   (if (empty? items)
     (zip/seq-zip (zip/root loc))
+    ;AHA! this needs to be a loop innit until we run
+    ;out of next matches
     (let [item (first items)
           matchloc (tree-find-key-in-map loc item)
           nextmloc (tree-find-key-in-map (zip/next matchloc) item)]
       (if (nil? nextmloc)
         (recur (zip/seq-zip (zip/root loc)) (rest items))
-        (recur (zip/next (link-node matchloc nextmloc)) items)))))
+        (do
+          (println "Linking")
+          (recur (zip/next (link-node matchloc nextmloc)) items))))))
 
 ;so the code seems to be working fp-growth ftw
 ;test against some larger datasets and see how life goes
