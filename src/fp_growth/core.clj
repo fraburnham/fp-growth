@@ -95,6 +95,9 @@
           (recur (zip/right loc))))
       (recur (zip/right loc)))))
 
+;get a list of nodes that appear more than once in the tree
+;the function does not consider the value of the node, only the
+;keyword
 (defn get-list-of-frequent-nodes [loc]
   (loop [l loc
          nodes '()]
@@ -106,6 +109,7 @@
         (recur (zip/next l) (conj nodes (first (keys (zip/node l)))))))))
 
 (defn tree-find-key-in-map [loc find]
+  (println find)
   (if (zip/end? loc)
     nil
     (if (zip/branch? loc)
@@ -122,14 +126,14 @@
   (zip/edit
    loc
    (fn [node]
-     (let [m (first node)
-           node-key (first (keys node))
-           remap-node-first (fn [m]
-                              (into 
-                               (sorted-map-by 
-                                (fn [x y] (if (= x node-key) -1 +1))) m))
-           newm (remap-node-first (assoc m :link nextloc))]
-       (cons newm (rest node))))))
+     (let [node-key (first (keys node))
+           remap-node-first 
+            (fn [m]
+              (into 
+               (sorted-map-by
+                (fn [x y] (if (= x node-key) -1 +1))) m))
+           newm (remap-node-first (assoc node :link nextloc))]
+       newm))))
 
 ;not right this instant, but this feels like it could be a reduce
 (defn item-link-tree [loc items]
@@ -141,3 +145,6 @@
       (if (nil? nextmloc)
         (recur (zip/seq-zip (zip/root loc)) (rest items))
         (recur (zip/next (link-node matchloc nextmloc)) items)))))
+
+;so the code seems to be working fp-growth ftw
+;test against some larger datasets and see how life goes
