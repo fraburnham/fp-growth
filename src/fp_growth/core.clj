@@ -135,6 +135,5 @@
         (recur (zip/next nloc) (concat r (list nloc)))))))
 
 (defn find-all-links [loc freq-nodes]
-  (apply merge (map first 
-                    (map #(hash-map % (find-all-nodes loc %)) freq-nodes))))
+  (reduce #(merge %1 %2) (map #(hash-map % (find-all-nodes loc %)) freq-nodes)))
   
