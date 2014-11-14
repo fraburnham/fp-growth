@@ -91,7 +91,6 @@
     (zip/seq-zip (zip/root loc))
     (if (zip/branch? loc)
       (let [children (next-subbranch loc)]
-        (println loc children)
         (if (nil? children)
           (recur (zip/next (zip/remove loc)))
           (recur (zip/right loc))))
@@ -123,34 +122,18 @@
             (recur (zip/next loc) find)))
         (recur (zip/next loc) find)))))
 
-(defn link-node [loc nextloc]
-  (zip/edit
-   loc
-   (fn [node]
-     (let [node-key (first (keys node))
-           remap-node-first 
-            (fn [m]
-              (into 
-               (sorted-map-by
-                (fn [x y] (if (= x node-key) -1 +1))) m))
-           newm (remap-node-first (assoc node :link nextloc))]
-       newm))))
+;so return links like
+;{:KEYWORD ([loc1] [loc2] etc)}
 
-;not right this instant, but this feels like it could be a reduce
-(defn item-link-tree [loc items]
-  (println items)
-  (if (empty? items)
-    (zip/seq-zip (zip/root loc))
-    ;AHA! this needs to be a loop innit until we run
-    ;out of next matches
-    (let [item (first items)
-          matchloc (tree-find-key-in-map loc item)
-          nextmloc (tree-find-key-in-map (zip/next matchloc) item)]
-      (if (nil? nextmloc)
-        (recur (zip/seq-zip (zip/root loc)) (rest items))
-        (do
-          (println "Linking")
-          (recur (zip/next (link-node matchloc nextmloc)) items))))))
+;returns all nodes in depth first order
+(defn find-all-nodes [loc find]
+  (loop [l loc
+         r '()]
+    (let [nloc (tree-find-key-in-map l find)]
+      (if (nil? nloc)
+        r
+        (recur (zip/next nloc) (concat r (list nloc)))))))
 
-;so the code seems to be working fp-growth ftw
-;test against some larger datasets and see how life goes
+(defn find-all-links
+  (map #(hash-map % (find-all-nodes tree %)) freq-nodes))
+  
