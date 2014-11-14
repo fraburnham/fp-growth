@@ -122,9 +122,6 @@
             (recur (zip/next loc) find)))
         (recur (zip/next loc) find)))))
 
-;so return links like
-;{:KEYWORD ([loc1] [loc2] etc)}
-
 ;returns all nodes in depth first order
 (defn find-all-nodes [loc find]
   (loop [l loc
@@ -135,5 +132,11 @@
         (recur (zip/next nloc) (concat r (list nloc)))))))
 
 (defn find-all-links [loc freq-nodes]
-  (reduce #(merge %1 %2) (map #(hash-map % (find-all-nodes loc %)) freq-nodes)))
-  
+  (reduce merge (map #(hash-map % (find-all-nodes loc %)) freq-nodes)))
+
+;now for a full-flow function from getting data to popping out a tree and links
+(defn gen-fp-tree [data support]
+  (let [tree (keep-branches-with-children (keep-frequent-nodes
+              (reduce build-path (cons (empty-tree) (pre-sort data))) support))
+        links (find-all-links tree (get-list-of-frequent-nodes tree))]
+    (list tree links)))
