@@ -2,29 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7ed6a056-13ae-4beb-b000-a28d331bbc3b" name="Default" comment="fixed error in gen-fp-tree">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__clojure_complete_0_2_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_clojure_clojure_1_6_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_clojure_tools_nrepl_0_2_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/clojure_project.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dpt-chart" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fp-tree-chart" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fp_growth.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/purchase-freq-better-format-chart" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/purchase-freq-chart" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/replstate.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fp_growth/#core.clj#" afterPath="$PROJECT_DIR$/src/fp_growth/#core.clj#" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fp_growth/.#core.clj" afterPath="$PROJECT_DIR$/src/fp_growth/.#core.clj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fp_growth/core.clj" afterPath="$PROJECT_DIR$/src/fp_growth/core.clj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/replstate.xml" afterPath="$PROJECT_DIR$/.idea/replstate.xml" />
     </list>
     <ignored path="fp-growth.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,8 +29,8 @@
       <file leaf-file-name="core.clj" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/fp_growth/core.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6506024" vertical-offset="1134" max-vertical-offset="2682">
-              <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.4479737" vertical-offset="1211" max-vertical-offset="2718">
+              <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="96" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -409,8 +388,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/fp_growth/core.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6506024" vertical-offset="1134" max-vertical-offset="2682">
-          <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.4479737" vertical-offset="1211" max-vertical-offset="2718">
+          <caret line="90" column="0" selection-start-line="90" selection-start-column="0" selection-end-line="96" selection-end-column="34" />
           <folding />
         </state>
       </provider>

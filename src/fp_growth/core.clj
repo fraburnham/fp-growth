@@ -93,7 +93,7 @@
     (zip/end? loc) (zip/seq-zip (zip/root loc))
     (and
       (nil? (zip/down loc))
-      (= 1 (count (zip/node (zip/up loc))))) (recur (zip/remove (zip/up loc)))
+      (= 1 (count (zip/node (zip/up loc))))) (recur (zip/next (zip/remove (zip/up loc))))
     :else (recur (zip/next loc))))
 
 ;get a list of nodes that appear more than once in the tree
@@ -141,3 +141,6 @@
                  (reduce build-path (cons (empty-tree) (pre-sort data))) support))
         links (find-all-links tree (get-list-of-frequent-nodes tree))]
     (list tree links)))
+
+;TODO: this lib needs lots of if cleanup. use the clearer and more concise cond when dealing
+;TODO: with multi/nested if statements
