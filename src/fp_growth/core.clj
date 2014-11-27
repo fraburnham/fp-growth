@@ -88,12 +88,13 @@
             (recur (zip/next loc) cutoff)))
         (recur (zip/next loc) cutoff)))))
 
+;This needs all kinds of testing, using a very different version in the data analytics project
 (defn keep-branches-with-children [loc]
   (cond
     (zip/end? loc) (zip/seq-zip (zip/root loc))
     (and
       (nil? (zip/down loc))
-      (= 1 (count (zip/node (zip/up loc))))) (recur (zip/next (zip/remove (zip/up loc))))
+      (nil? (zip/node (zip/up (zip/up loc))))) (recur (zip/remove loc))
     :else (recur (zip/next loc))))
 
 ;get a list of nodes that appear more than once in the tree
