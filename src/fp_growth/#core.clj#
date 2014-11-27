@@ -73,6 +73,10 @@
          (update-node nn)
          (rest path))))))
 
+;this may be the wrong idea
+;maybe this can be done after linking
+;or pass the build path only items
+;that show up in the data only once.
 (defn keep-frequent-nodes [loc cutoff]
   (if (zip/end? loc)
     (zip/seq-zip (zip/root loc))
@@ -122,36 +126,48 @@
             (recur (zip/next loc) find)))
         (recur (zip/next loc) find)))))
 
-(defn link-node [loc nextloc]
-  (zip/edit
-   loc
-   (fn [node]
-     (let [node-key (first (keys node))
-           remap-node-first 
-            (fn [m]
-              (into 
-               (sorted-map-by
-                (fn [x y] (if (= x node-key) -1 +1))) m))
-           newm (remap-node-first (assoc node :link nextloc))]
-       newm))))
+;returns all nodes in depth first order
+(defn find-all-nodes [loc find]
+  (loop [l loc
+         r '()]
+    (let [nloc (tree-find-key-in-map l find)]
+      (if (nil? nloc)
+        r
+        (recur (zip/next nloc) (concat r (list nloc)))))))
 
-;not right this instant, but this feels like it could be a reduce
-(defn item-link-tree [loc items]
-  (if (empty? items)
-    (zip/seq-zip (zip/root loc))
-    ;AHA! this needs to be a loop innit until we run
-    ;out of next matches
-    (let [item (first items)
-          matchloc (tree-find-key-in-map loc item)
-          nextmloc (tree-find-key-in-map (zip/next matchloc) item)]
-      (if (nil? nextmloc)
-        (recur (zip/seq-zip (zip/root loc)) (rest items))
-        (recur (zip/next (link-node matchloc nextmloc)) items)))))
+(defn find-all-links [loc freq-nodes]
+  (reduce merge (map #(hash-map % (find-all-nodes loc %)) freq-nodes)))
 
-;so the code seems to be working fp-growth ftw
-;test against some larger datasets and see how life goes
-(def sorted-data (pre-sort item-titles-price))
-(def tree (reduce build-path (cons (empty-tree) sorted-data)))
-(def tree (keep-frequent-nodes tree 2))
-(def tree (keep-branches-with-children (zip/next tree)))
-(def freq-nodes (get-list-of-frequent-nodes tree))
+;now for a full-flow function from getting data to popping out a tree and links
+(defn gen-fp-tree [data support]
+  (let [tree (keep-branches-with-children (keep-frequent-nodes
+              (reduce build-path (cons (empty-tree) (pre-sort data))) support))
+        links (find-all-links tree (get-list-of-frequent-nodes tree))]
+    (list tree links)))
+
+;temporary output parsing for javascript
+;(first (zip/up)) will give the parent for orgchart
+(defn first-map-nested-element [l]
+  (if (empty? l) nil
+      (if (map? l) 
+        l
+        (recur (first l)))))
+
+(defn make-js-ready [loc]
+  (loop [r ""
+         loc loc] ;build up a return string to write out to a file
+    (if (zip/end? loc) 
+      r
+      (if (zip/branch? loc)
+        (recur r (zip/next loc))
+        (let [node (if (nil? (zip/node loc)) "Frequent Purchase Tree" 
+                       (zip/node loc))
+              parent (if (nil? (first-map-nested-element 
+                                (zip/up (zip/up loc))))
+                       "Frequent Purchase Tree"
+                       (first-map-nested-element 
+                        (zip/up (zip/up loc))))
+              link "''"]
+          (recur (str r ", ['" node "', '" parent "', " link "]") 
+                 (zip/next loc)))))))
+        

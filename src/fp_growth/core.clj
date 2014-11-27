@@ -73,6 +73,10 @@
          (update-node nn)
          (rest path))))))
 
+;this may be the wrong idea
+;maybe this can be done after linking
+;or pass the build path only items
+;that show up in the data only once.
 (defn keep-frequent-nodes [loc cutoff]
   (if (zip/end? loc)
     (zip/seq-zip (zip/root loc))
@@ -84,17 +88,13 @@
             (recur (zip/next loc) cutoff)))
         (recur (zip/next loc) cutoff)))))
 
-;GOTTA ZIP NEXT OFF THE ROOT NODE
 (defn keep-branches-with-children [loc]
-  (if (nil? (zip/right loc)) ;this almost works unless the last branch has
-                             ;no children
-    (zip/seq-zip (zip/root loc))
-    (if (zip/branch? loc)
-      (let [children (next-subbranch loc)]
-        (if (nil? children)
-          (recur (zip/next (zip/remove loc)))
-          (recur (zip/right loc))))
-      (recur (zip/right loc)))))
+  (cond
+    (zip/end? loc) (zip/seq-zip (zip/root loc))
+    (and
+      (nil? (zip/down loc))
+      (= 1 (count (zip/node (zip/up loc))))) (recur (zip/remove (zip/up loc)))
+    :else (recur (zip/next loc))))
 
 ;get a list of nodes that appear more than once in the tree
 ;the function does not consider the value of the node, only the
@@ -136,7 +136,8 @@
 
 ;now for a full-flow function from getting data to popping out a tree and links
 (defn gen-fp-tree [data support]
-  (let [tree (keep-branches-with-children (keep-frequent-nodes
-              (reduce build-path (cons (empty-tree) (pre-sort data))) support))
+  (let [tree (keep-branches-with-children
+               (keep-frequent-nodes
+                 (reduce build-path (cons (empty-tree) (pre-sort data))) support))
         links (find-all-links tree (get-list-of-frequent-nodes tree))]
     (list tree links)))
