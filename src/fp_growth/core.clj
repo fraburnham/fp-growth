@@ -26,26 +26,26 @@
 ;;An instance of the ITree interface to use for comparing and
 ;;printing node values. Pass when needed as (tree-interface.)
 ;;*
-(deftype tree-interface []
-         ITree
-         (nodeDataEquals [this a b] (= a b))
-         (nodeDataGreater [this a b] (> a b))
-         (toString [this node] (str (.-data node))))
-
-(def tree-interface
+(defn tree-interface []
   (reify
     ITree
     (nodeDataEquals [this a b] (= a b))
     (nodeDataGreater [this a b] (> a b))
-    (toString [this node] (str (.-data node)))))
+    (toString [this node]
+              (if (nil? node)
+                "Root"
+                (let [data (.-data node)]
+                     (if (nil? data)
+                       "No Data"
+                       (str data)))))))
 
 ;so the basics like node adding are already written, so let's play with some tests to build a tree
 ;and see how it behaves
 (def t (new Tree))
 (.addChild (.-rootNode t) (.newNode t 1))
 (.addChild (.-rootNode t) (.newNode t 2))
-(.addChild (.-rootNode t) (.newNode t "a"))
-(.addChild (.getChild (.-rootNode t) 2) (.newNode t "rull chilrens"))
-(.printTree tree-interface (.-rootNode t))
+(.addChild (.-rootNode t) (.newNode t "Tree<Integer>"))
+(.addChild (.getChild (.-rootNode t) 2) (.newNode t "SUPER CHILD type means nothing to me"))
+(.printTree t (tree-interface.) (.-rootNode t))
 
 
