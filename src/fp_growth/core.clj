@@ -71,20 +71,25 @@
 ;        nodes' data.
 ; @param tree a Tree to build up
 ; @param items a seq in the format (itemA itemB itemC) to add to the tree
-; @return the tree object, however the tree has already been mutated in place
+; @return nil the tree has already been mutated in place
 ;;*
 (defn build-tree! [fn-visit-node fn-compare-data tree items]
   (loop [r (.-rootNode tree)
          items items]
+    (let [parent-data (if (nil? (.getRoot r)) nil (.getData (.getRoot r)))]
+      (println parent-data (.getData r)))
     (if (empty? items)
-      tree
+      nil
       (let [find-child (get-child fn-compare-data r (first items))]
         (if (nil? find-child)
           ;if the child doesn't exist add it
-          (.addChild r (.newNode tree (first items)))
+          (do
+            (.addChild r (.newNode tree (first items)))
+            (recur (.getChild r (dec (.getNumChildren r))) (rest items)))
           ;if the child does exist update the node
-          (fn-visit-node find-child))
-        (recur (.getChild r (dec (.getNumChildren r))) (rest items))))))
+          (do
+            (fn-visit-node find-child)
+            (recur find-child (rest items))))))))
 
 ;;*
 ; Prunes a node's children (in place) based on the return value of fn-prune?.

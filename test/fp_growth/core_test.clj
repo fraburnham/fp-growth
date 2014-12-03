@@ -14,12 +14,10 @@
 (defn map-visit [node]
   (let [data (.-data node)
         k (first (keys data))]
-    (set! (.-data node) {k (inc (k data))})))
+    (.setData node {k (inc (k data))})))
 
 (defn map-compare [node-data data]
-  (let [nk (first (keys node-data))
-        dk (first (keys data))]
-    (= nk dk)))
+  (= (first (keys node-data)) (first (keys data))))
 
 (defn mapify-items [items]
   (map (fn [item]
