@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ed6a056-13ae-4beb-b000-a28d331bbc3b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__Tree_0_1_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Leiningen__clojure_complete_0_2_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__clojure_complete_0_2_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_clojure_clojure_1_6_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_clojure_clojure_1_6_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_clojure_tools_nrepl_0_2_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Leiningen__org_clojure_tools_nrepl_0_2_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/clojure_project.xml" afterPath="$PROJECT_DIR$/.idea/clojure_project.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/fp_growth/core.clj" afterPath="$PROJECT_DIR$/src/fp_growth/core.clj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fp_growth.iml" afterPath="$PROJECT_DIR$/fp_growth.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project.clj" afterPath="$PROJECT_DIR$/project.clj" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/replstate.xml" afterPath="$PROJECT_DIR$/.idea/replstate.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -47,12 +38,12 @@
       <file leaf-file-name="core.clj" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/fp_growth/core.clj">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7319149" vertical-offset="212" max-vertical-offset="1152">
-              <caret line="75" column="14" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
+            <state vertical-scroll-proportion="0.65531915" vertical-offset="248" max-vertical-offset="1224">
+              <caret line="67" column="77" selection-start-line="67" selection-start-column="77" selection-end-line="67" selection-end-column="77" />
               <folding>
+                <element signature="e#125#194#0" expanded="false" />
                 <element signature="e#654#947#0" expanded="false" />
                 <element signature="e#1080#1377#0" expanded="false" />
-                <element signature="e#1986#2341#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -434,12 +425,16 @@
       <created>1417108592461</created>
       <updated>1417108592462</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Working through the migration details ... slowly. Lots of interop to get right.">
+      <created>1417575091108</created>
+      <updated>1417575091108</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="1" width="1920" height="1080" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -454,19 +449,19 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988626" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960597" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="REPL" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37593183" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13258786" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13258786" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988626" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988626" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32988626" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -488,11 +483,20 @@
     </option>
     <MESSAGE value="fixed error in gen-fp-tree" />
     <MESSAGE value="need to do some cleanup in here, using a diff version in a project, this one is stale" />
-    <option name="LAST_COMMIT_MESSAGE" value="need to do some cleanup in here, using a diff version in a project, this one is stale" />
+    <MESSAGE value="Working through the migration details ... slowly. Lots of interop to get right." />
+    <option name="LAST_COMMIT_MESSAGE" value="Working through the migration details ... slowly. Lots of interop to get right." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/local-maven-repo/Tree/Tree/0.1.0/Tree-0.1.0.jar!/ITree.class</url>
+          <line>1</line>
+          <properties />
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
@@ -505,9 +509,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1692">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -525,9 +529,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="558" max-vertical-offset="1692">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -545,9 +549,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="1512">
           <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -565,9 +569,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="1512">
           <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -585,9 +589,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="333" max-vertical-offset="1296">
           <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -605,9 +609,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1296">
           <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -625,9 +629,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1296">
           <caret line="56" column="93" selection-start-line="56" selection-start-column="93" selection-end-line="56" selection-end-column="93" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -645,9 +649,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="216">
           <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -665,9 +669,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="342">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -677,9 +681,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1773" max-vertical-offset="2736">
           <caret line="146" column="38" selection-start-line="146" selection-start-column="38" selection-end-line="146" selection-end-column="38" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -689,9 +693,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2736">
           <caret line="146" column="38" selection-start-line="146" selection-start-column="38" selection-end-line="146" selection-end-column="38" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -701,9 +705,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4392">
           <caret line="96" column="34" selection-start-line="96" selection-start-column="34" selection-end-line="96" selection-end-column="34" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -713,9 +717,9 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1998" max-vertical-offset="3240">
           <caret line="144" column="82" selection-start-line="144" selection-start-column="82" selection-end-line="144" selection-end-column="82" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -728,14 +732,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$PROJECT_DIR$/local-maven-repo/Tree/Tree/0.1.0/Tree-0.1.0.jar!/ITree.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.019672131" vertical-offset="0" max-vertical-offset="915">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#277#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/fp_growth/core.clj">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7319149" vertical-offset="212" max-vertical-offset="1152">
-          <caret line="75" column="14" selection-start-line="75" selection-start-column="14" selection-end-line="75" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.65531915" vertical-offset="248" max-vertical-offset="1224">
+          <caret line="67" column="77" selection-start-line="67" selection-start-column="77" selection-end-line="67" selection-end-column="77" />
           <folding>
+            <element signature="e#125#194#0" expanded="false" />
             <element signature="e#654#947#0" expanded="false" />
             <element signature="e#1080#1377#0" expanded="false" />
-            <element signature="e#1986#2341#0" expanded="false" />
           </folding>
         </state>
       </provider>

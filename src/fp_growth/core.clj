@@ -43,12 +43,6 @@
             "No Data"
             (str data)))))))
 
-;reduce over the pre-sorted data?
-;check the rootNode for the first item, if it exists, inc the value
-;  if it doesn't exist add it as a child to the rootNode of the tree
-;for the next item assume that the matching node/node we just created
-;  is the new "rootNode" for the "new tree". to keep items in order
-
 ;;*
 ;;Check if a node has a child with the given data
 ;;@param data-compare A function that returns true when both inputs match
@@ -57,7 +51,7 @@
 ;;@retrun A Tree.Node if one exists nil otherwise
 ;;*
 (defn get-child [data-compare root-node child-data]
-  (loop [x (.getNumChildren root-node)]
+  (loop [x (dec (.getNumChildren root-node))]
     (if (= x -1)
       nil ;got to the end and saw no matches along the way
       (let [node (.getChild root-node x)] ;get the xth child of root-node
@@ -65,19 +59,23 @@
           node ;found the node
           (recur (dec x))))))) ;didn't find the node, dec x and check again
 
+;;*
+;;Builds the tree (in place) one transaction at a time. Update nodes
+;;if they already exist, create them otherwise. Sticks to a single path.
+;;@param fn-inc-node is the function to apply when a node is updated
+;;@param tree a Tree to build up
+;;@param items a seq in the format (itemA itemB itemC) to add to the tree
+;;@return the tree object, however the tree has already been mutated in place
+;;*
 (defn build-tree! [fn-inc-node tree items]
   (loop [r (.-rootNode tree)
          items items]
     (if (empty? items)
       tree
       (let [find-child (get-child = r (first items))]
-        ;need to perform a check here to see if the 
-        ;child exists and update it otherwise add a new
-        ;child
         (if (nil? find-child)
           ;if the child doesn't exist add it
           (.addChild r (.newNode tree (first items)))
           ;if the child does exist update the node
           (fn-inc-node find-child))
-        ;now recur
-        (recur (.getChild r (dec (.getNumNodes r))) (rest items))))))
+        (recur (.getChild r (dec (.getNumChildren r))) (rest items))))))
