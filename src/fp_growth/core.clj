@@ -23,9 +23,7 @@
             (map (fn [x]
                    (remove nil?
                            (map first
-                                (map (fn [y]
-                                       (if (>= (last y) cutoff)
-                                         y)) x))))
+                                (map (fn [y] (if (>= (last y) cutoff) y)) x))))
                  (map #(sort-by last >
                                 (alpha-by-first-char (map item-freq-list %)))
                       data)))))
@@ -48,7 +46,7 @@
             (str data)))))))
 
 ;;*
-; Check if a node has a child with the given data
+; Check if a node has a direct child with the given data
 ; @param data-compare A function that returns true when both inputs match
 ; @param root-node A Tree.Node to start the search from
 ; @param child-data The value to compare against Node.data
@@ -87,3 +85,20 @@
           ;if the child does exist update the node
           (fn-visit-node find-child))
         (recur (.getChild r (dec (.getNumChildren r))) (rest items))))))
+
+;;*
+; Prunes a node's children (in place) based on the return value of fn-prune?.
+; @param fn-prune? accepts a node
+;                  returns true if a node should be pruned, otherwise false
+; @param root-node the node to start pruning from
+; @return undefined (return value is un-needed as node is modified in place)
+;;*
+(defn prune-children! [fn-prune? root-node]
+  ;apply fn-prune? to each child-node to determine if it should be pruned
+  (loop [x (dec (.getNumChildren root-node))]
+    (if (= x -1)
+        nil
+        (do
+          (if (fn-prune? (.getChild root-node x))
+            (.removeChild root-node x))
+          (recur (dec x))))))
