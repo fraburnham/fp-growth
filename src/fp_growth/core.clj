@@ -76,8 +76,6 @@
 (defn build-tree! [fn-visit-node fn-compare-data tree items]
   (loop [r (.-rootNode tree)
          items items]
-    (let [parent-data (if (nil? (.getRoot r)) nil (.getData (.getRoot r)))]
-      (println parent-data (.getData r)))
     (if (empty? items)
       nil
       (let [find-child (get-child fn-compare-data r (first items))]
