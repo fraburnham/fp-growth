@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ClojureProjectSettings">
     <option name="useStructuralEditing" value="false" />
+    <option name="addDependentSources" value="false" />
   </component>
 </project>
 
