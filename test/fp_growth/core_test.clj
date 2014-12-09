@@ -1,6 +1,7 @@
 (ns fp-growth.core-test
   (:require [clojure.test :refer :all]
-            [fp-growth.core :refer :all]))
+            [fp-growth.core :refer :all])
+  (:import ITree))
 
 (def alphanumeric "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
@@ -8,9 +9,8 @@
   (apply str (repeatedly num-letters #(rand-nth alphanumeric))))
 
 (defn random-ticket [num-items]
-  (repeatedly num-items #(random-string-builder 3)))
+  (repeatedly num-items #(random-string-builder 2)))
 
-;something in visit doesn't seem to be working correctly
 (defn map-visit [node]
   (let [data (.-data node)
         k (first (keys data))]
@@ -26,10 +26,23 @@
 (defn prune? [cutoff node]
   (<= (.getNumChildren node) cutoff))
 
+(defn tree-interface []
+  (reify
+    ITree
+    (nodeDataEquals [this a b] (map-compare a b))
+    (nodeDataGreater [this a b] (> a b))
+    (toString [this node]
+      (if (nil? node)
+        "Root"
+        (let [data (.-data node)]
+          (if (nil? data)
+            "No Data"
+            (str data)))))))
+
 (def tree (new Tree))
-(def data (repeatedly 3000 #(random-ticket (inc (rand-int 10)))))
+(def data (repeatedly 3000 #(random-ticket (inc (rand-int 3)))))
 (def sorted-mapifyd-data (map mapify-items (pre-sort data 3)))
-(map (partial build-tree! map-visit map-compare tree) sorted-mapifyd-data)
+(map (partial build-tree! map-visit (tree-interface) tree) sorted-mapifyd-data)
 (prune-children! (partial prune? 0) (.rootNode tree))
 
 ;TODO: some actual testing not just REPL testing
