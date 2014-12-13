@@ -3,10 +3,10 @@
             [fp-growth.core :refer :all])
   (:import ITree))
 
-(def alphanumeric "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+(def alpha "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 (defn random-string-builder [num-letters]
-  (apply str (repeatedly num-letters #(rand-nth alphanumeric))))
+  (apply str (repeatedly num-letters #(rand-nth alpha))))
 
 (defn random-ticket [num-items]
   (repeatedly num-items #(random-string-builder 2)))

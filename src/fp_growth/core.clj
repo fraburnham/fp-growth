@@ -1,9 +1,6 @@
 (ns fp-growth.core
     (:import Tree ITree))
 
-;use the Tree.class to see if it offeres speed improvements over
-;clojure.zip. In super preliminary tests it is quicker
-
 (defn alpha-by-first-char [x]
   (sort-by (comp str first) compare x))
 
@@ -12,6 +9,7 @@
 ; placed as the first item in the list. This allows the tree building to be
 ; simplified.
 ; @param data A seq that is formatted ((item item item) (item item item))
+; @param cutoff if an item occurs less times than cutoff it will be dropped
 ; @return sorted data, ready for tree building
 ;;*
 (defn pre-sort [data cutoff]
@@ -30,7 +28,8 @@
 
 ;;*
 ; Check if a node has a direct child with the given data
-
+; @param tree-interface an interface that matches ITree
+; @param tree the tree or subtree to walk
 ; @param root-node A Tree.Node to start the search from
 ; @param child-data The value to compare against Node.data
 ; @retrun A Tree.Node if one exists nil otherwise
@@ -42,13 +41,13 @@
 ; Builds the tree (in place) one transaction at a time. Update nodes
 ; if they already exist, create them otherwise. Sticks to a single path.
 ; To build a tree from a list like ((item item item) (item item item)),
-; use (map (partial build-tree! ...) ...)
+; use (doall (map (partial build-tree! ...) ...)). Tree building is not
+; thread safe.
 ; @param fn-visit-node is the function to apply when a node is updated
-; @param fn-compare-data is used to compare the current item with the child
-;        nodes' data.
+; @param tree-interface an interface that reifys ITree
 ; @param tree a Tree to build up
 ; @param items a seq in the format (itemA itemB itemC) to add to the tree
-; @return nil the tree has already been mutated in place
+; @return undefined the tree has already been mutated in place
 ;;*
 (defn build-tree! [fn-visit-node tree-interface tree items]
   (loop [r (.-rootNode tree)
@@ -82,15 +81,40 @@
           (recur (dec x))))))
 
 ;;*
+; Returns the node's children as a list.
+; @param node a Tree.Node
+; @return a list of child nodes (first child added to the node is first in the
+;         list.
+;;*
+(defn child-list [node]
+  (loop [node node
+         num-children (.getNumChildren node)
+         ret '()]
+    (if (= 0 num-children)
+      ret
+      (recur node (dec num-children) (cons (.getChild node num-children) ret)))))
+
+;;*
+; Returns the tree as a list of nodes during a depth first walk.
+; @param tree a Tree to convert
+; @return a list of nodes
+;;*
+(defn tree-to-list [tree]
+  (loop [nodes (list (.rootNode tree))
+         ret '()]
+    (let [n (first nodes)]
+      (recur (concat (child-list n) (rest nodes))
+             (cons n ret)))))
+
+;;*
 ; Uses fn-update-node to create links between nodes based on
 ; fn-data-compare.
-; @param fn-data-compare takes data from two nodes and returns
-;                        true if the nodes should be considered equal
-; @param fn-update-node takes a node and updates the data in place
-; @param tree a Tree object to find links in
+; @param tree-interface an interface that reifys ITree
+; @param fn-add-link takes a node and updates the data in place
+; @param tree a Tree object to find links for
 ; @return nil, the tree is modified in place
 ;;*
-(defn make-links! [fn-data-compare fn-update-node tree]
-  ;see what node we're on in a depth first walk of the tree
-  ;find the next occurance of the node in the tree and update the current
-  ;node to include a link forward to the next node
+(defn make-links! [fn-tree-interface fn-add-link tree]
+  ;go over each node in tree-to-list compare it to (rest tree-to-list)
+  ;remove the node from (rest tree-to-list)
+  ;add the node to uniq-nodes
