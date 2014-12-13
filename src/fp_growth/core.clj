@@ -87,34 +87,42 @@
 ;         list.
 ;;*
 (defn child-list [node]
-  (loop [node node
-         num-children (.getNumChildren node)
+  (loop [num-children (.getNumChildren node)
          ret '()]
     (if (= 0 num-children)
       ret
-      (recur node (dec num-children) (cons (.getChild node num-children) ret)))))
+      (recur (dec num-children) (cons (.getChild node num-children) ret)))))
 
 ;;*
-; Returns the tree as a list of nodes during a depth first walk.
-; @param tree a Tree to convert
-; @return a list of nodes
+; Visits each node in a depth first walk and applies fn-visit.
+; @param fn-visit! is a function that accepts a node the return value is ignored
+; @param tree a Tree to walk
+; @return undefined the nodes are assumed to be modified in place
 ;;*
-(defn tree-to-list [tree]
-  (loop [nodes (list (.rootNode tree))
-         ret '()]
-    (let [n (first nodes)]
-      (recur (concat (child-list n) (rest nodes))
-             (cons n ret)))))
+(defn depth-first-visit [fn-visit! tree]
+  (loop [nodes (list (.rootNode tree))]
+    (if (empty? nodes)
+      nil
+      (let [n (first nodes)]
+        (fn-visit! n)
+        (recur (concat (child-list n) (rest nodes)))))))
 
 ;;*
-; Uses fn-update-node to create links between nodes based on
-; fn-data-compare.
+;
 ; @param tree-interface an interface that reifys ITree
-; @param fn-add-link takes a node and updates the data in place
+; @param fn-add-link takes two Tree.Nodes the first is the node we're on
+;                    the second is the node to link to
+; @param fn-linked? accepts a Tree.Node and returns true if a node already has
+;                   a forward link
 ; @param tree a Tree object to find links for
 ; @return nil, the tree is modified in place
 ;;*
-(defn make-links! [fn-tree-interface fn-add-link tree]
-  ;go over each node in tree-to-list compare it to (rest tree-to-list)
-  ;remove the node from (rest tree-to-list)
-  ;add the node to uniq-nodes
+(defn make-links! [fn-tree-interface fn-add-link fn-linked? tree]
+  (defn visit! [node]
+    (if (not (fn-linked? node))
+      (let [next-node (.findNode tree fn-tree-interface (.-data node) node)]
+        (if (not (nil? next-node))
+          (fn-add-link node next-node)))))
+  (depth-first-visit visit! tree))
+
+
